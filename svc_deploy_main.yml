@@ -1,0 +1,39 @@
+---
+# svc-main
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-main      #ingress-rule에 있는 service이름과 같아야 함
+spec:
+  selector:
+    app: main
+  ports:
+  - port: 80
+    targetPort: 80
+# type지정은 안 해도 됨. default가 cluster-ip 이므로
+
+---
+# deploy-shop
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: main     #app: main을 붙이고있는 pod에게 보낼 것
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+      - name: main
+        image: chaewon0720/portal:main
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
