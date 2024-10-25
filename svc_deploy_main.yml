@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: main
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: main     #app: main을 붙이고있는 pod에게 보낼 것
